@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from math import floor
+import ReversiGame.py
 
 pygame.init()
 
@@ -8,7 +9,7 @@ screen =  pygame.display.set_mode((1000, 1000))
 pygame.display.set_caption('Reversi')
 pos = pygame.image.load(r'Sprites/Posicao.png')
 peca_branca = pygame.image.load(r'Sprites/Peca_branca.png')
-posicoes = []
+peca_preta = pygame.image.load(r'Sprites/Peca_preta.png')
 estado = {}
 
 
@@ -17,9 +18,9 @@ for i in range(8):
        x = 220 + i*75
        y = 50 + j*75
        aux = (x, y)
-       posicoes.append(aux)
        estado[aux] = 'VAZIO'
-       
+
+game = ReversiGame()
              
 while True:
     for event in pygame.event.get():
@@ -32,8 +33,8 @@ while True:
             	j = floor((Y-50)/75)
             	auxX = 220 + i*75
             	auxY = 50 + j*75
-            	estado[(auxX, auxY)] = 'WHITE'
-            
+            	if estado[(auxX, auxY)] == 'VAZIO':
+            	    estado[(auxX, auxY)] = 'WHITE'
             	
     
     list_pos = estado.keys()
@@ -42,6 +43,8 @@ while True:
     	screen.blit(pos, posicao)
     	if estado[posicao] == 'WHITE':
     	    screen.blit(peca_branca, posicao)
+    	elif estado[posicao] == 'BLACK':
+    	    screen.blit(peca_preta, posicao)
     pygame.display.update()    
 
 
