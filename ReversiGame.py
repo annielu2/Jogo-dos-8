@@ -77,6 +77,7 @@ class ReversiGame:
             if(self.estado == "NORMAL" and self.placar["BLANK"] > 0):
                 self.estado = "PASS"
                 self.tipoJog = ReversiGame.negTipo(self.tipoJog)
+                self.setTodasPoss()
             else:
                 self.estado = "FIN"
         else:
