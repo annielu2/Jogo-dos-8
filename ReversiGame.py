@@ -137,6 +137,7 @@ class ReversiGame:
                         self.alteradas.add((x+i, y+j))
                     self.transformarLinha(x+i, y+j, i, j)
         
+        self.placar[self.tipoJog] += 1
         self.tipoJog = ReversiGame.negTipo(self.tipoJog)
         return True
         
