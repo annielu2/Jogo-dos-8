@@ -28,9 +28,12 @@ class ReversiGame:
         self.tipoJog = "BLACK"
         self.estado = "NORMAL"
         
+        self.placar = {"WHITE": 2,
+                       "BLACK": 2,
+                       "BLANK": 60} 
+        
         self.tabuleiro = []
         for i in range(8):
-            #self.tabuleiro.append(random.choices(["WHITE", "BLACK", "BLANK"], k = 8))
             if(i < 3 or i > 4):
                 self.tabuleiro.append(["BLANK"]*8)
             elif(i == 3):
@@ -52,11 +55,21 @@ class ReversiGame:
             return "WHITE"
 
 
+    def transformaPeca(self, x, y):
+        self.tabuleiro[x][y] = self.tipoJog
+        self.placar[self.tipoJog] += 1
+        self.placar[ReversiGame.negTipo(self.tipoJog)] -= 1 
+
     def getTodasPoss(self):
         todasPoss = []
         for loc in self.alteradas:
             if(self.possJogar(loc[0], loc[1])):
                 todasPoss.append(loc)
+        if(len(todasPoss) == 0):
+            if(self.estado == "NORMAL"):
+                self.estado = "PASS"
+            else:
+                self.estado = "FIN"
         return todasPoss
 
 
@@ -102,7 +115,7 @@ class ReversiGame:
         if(self.tabuleiro[x][y] == self.tipoJog):
             x, y = x - desX, y - desY
             while(self.tabuleiro[x][y] == neg):
-                self.tabuleiro[x][y] = self.tipoJog
+                self.transformaPeca(x, y)
                 x, y = x - desX, y - desY
 
     
