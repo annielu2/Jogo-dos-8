@@ -35,7 +35,9 @@ def display(estado, todasPoss = []):
         screen.blit(possibilidades, ((220 + poss[0]*75), (50 + poss[1]*75))) 
      
     if(estado =="PASS"):
-        print("Nenhuma jogada possível! Clicke para passar a jogada.")
+        passar = "Nenhuma jogada possível! Clicke para passar a jogada."
+        txt = font.render(passar, 1, (145, 0, 0))
+        screen.blit(txt,(50, 700)) 
     
     elif(estado == "FIN"):
     	placarPretas = "PRETAS: "+str(game.placar["BLACK"])
@@ -51,7 +53,6 @@ def display(estado, todasPoss = []):
 display(game.estado, game.getTodasPoss())
 
 while True:
-    
     for event in pygame.event.get():
         if event.type == QUIT:  
             pygame.quit()
@@ -61,16 +62,18 @@ while True:
                 if Y <= 650 and Y >=50 and X <= 820 and X >= 220:
                     i = floor((X-220)/75)
                     j = floor((Y-50)/75)
-                    game.jogar(i, j)
+                    
                     print("PRETAS: "+str(game.placar["BLACK"]))
                     print("BRANCAS: "+str(game.placar["WHITE"]))
                             
-                display(game.estado)
-                jogadaAdv = Mediador.jogaAleatorio(game.getTodasPoss())
-                time.sleep(1)
-                game.jogar(jogadaAdv[0], jogadaAdv[1])
-                time.sleep(1)
-                display(game.estado, game.getTodasPoss()) 
+                if(game.jogadaValida((i, j))):
+                    game.jogar(i, j)
+                    display(game.estado)
+                    jogadaAdv = Mediador.jogaAleatorio(game.getTodasPoss())
+                    time.sleep(1)
+                    game.jogar(jogadaAdv[0], jogadaAdv[1])
+                    time.sleep(1)
+                    display(game.estado, game.getTodasPoss()) 
 
 
 print("FIM DE JOGO")

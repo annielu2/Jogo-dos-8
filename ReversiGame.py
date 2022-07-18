@@ -59,6 +59,14 @@ class ReversiGame:
             return "WHITE"
 
 
+    def jogadaValida(self, pos):
+        todasPoss = self.getTodasPoss()
+        for poss in todasPoss:
+            if pos == poss:
+                return True
+        return False        
+    
+    
     def transformaPeca(self, x, y):
         self.tabuleiro[x][y] = self.tipoJog
         self.placar[self.tipoJog] += 1
