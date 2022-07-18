@@ -25,6 +25,7 @@ import random
 class ReversiGame:
     
     def __init__(self):
+        self.tipoJog = "BLACK"
         self.tabuleiro = []
         for i in range(8):
             #self.tabuleiro.append(random.choices(["WHITE", "BLACK", "BLANK"], k = 8))
@@ -118,12 +119,10 @@ class ReversiGame:
         return True
         
 
-    def main(self):                
-        tipoJog = "BLACK"
-        
+    def main(self):                        
         
         while(True):
-            poss = self.getTodasPoss(tipoJog)
+            poss = self.getTodasPoss(self.tipoJog)
             for i in range(8):
                 for j in range(8):
                     if(self.tabuleiro[i][j] == "WHITE"):
@@ -133,17 +132,17 @@ class ReversiGame:
                     elif ((i,j) in poss):
                         print("⧈", end = ' ') #⧈
                     else:
-                        print(" ", end = ' ') #⧈
+                        print("⛶", end = ' ') #⧈
                     
                 print()
             
-            if(tipoJog == "BLACK"):
+            if(self.tipoJog == "BLACK"):
                 x, y = map(int, input("[PRETAS]Digite as coordenadas: ").split())
             else:
                 x, y = map(int, input("[BRANCAS]Digite as coordenadas: ").split())
                 
-            if(self.jogar(x, y, tipoJog)):
-                tipoJog = ReversiGame.negTipo(tipoJog)
+            if(self.jogar(x, y, self.tipoJog)):
+                self.tipoJog = ReversiGame.negTipo(self.tipoJog)
 
 
 game = ReversiGame()
