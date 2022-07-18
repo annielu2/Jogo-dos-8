@@ -26,6 +26,8 @@ class ReversiGame:
     
     def __init__(self):
         self.tipoJog = "BLACK"
+        self.estado = "NORMAL"
+        
         self.tabuleiro = []
         for i in range(8):
             #self.tabuleiro.append(random.choices(["WHITE", "BLACK", "BLANK"], k = 8))
@@ -35,8 +37,8 @@ class ReversiGame:
                 self.tabuleiro.append(["BLANK"]*3 + ["WHITE", "BLACK"] + ["BLANK"]*3)
             else:
                 self.tabuleiro.append(["BLANK"]*3 + ["BLACK", "WHITE"] + ["BLANK"]*3)
-        self.possPretas = []
-        self.possBrancas = []
+        
+        
         self.alteradas = {(2, 2), (2, 3), (2, 4), (2, 5),
                           (3, 2), (3, 5),
                           (4, 2), (4, 5),
@@ -60,7 +62,7 @@ class ReversiGame:
 
     def possLinha(self, x, y, desX, desY):
         neg = ReversiGame.negTipo(self.tipoJog)
-        if(not((x >= 0 and y >= 0) and (x <= 7 and y <= 7)) or self.tabuleiro[x][y] != neg):
+        if(self.tabuleiro[x][y] != neg):
             return False
         
         while(self.tabuleiro[x][y] == neg):
@@ -80,15 +82,16 @@ class ReversiGame:
         
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if(self.possLinha(x+i, y+j, i, j)):
-                    return True;
+                if((x+i >= 0 and y+j >= 0) and (x+i <= 7 and y+j <= 7)):
+                    if(self.possLinha(x+i, y+j, i, j)):
+                        return True;
         return False
     
     
     def transformarLinha(self, x, y, desX, desY):     
             
         neg = ReversiGame.negTipo(self.tipoJog)
-        if(not((x >= 0 and y >= 0) and (x <= 7 and y <= 7)) or self.tabuleiro[x][y] != neg):
+        if(self.tabuleiro[x][y] != neg):
             return False
         
         while(self.tabuleiro[x][y] == neg):
