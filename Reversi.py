@@ -18,7 +18,7 @@ font = pygame.font.Font('freesansbold.ttf', 16)
 
 game = ReversiGame.ReversiGame()
 
-def display(estado):
+def display(estado, todasPoss = []):
     screen.fill((225,225,225))
     for i in range(8):
         for j in range(8):
@@ -31,7 +31,7 @@ def display(estado):
             elif game.tabuleiro[i][j] == 'BLACK':
                 screen.blit(peca_preta, posicao)
      
-    for poss in game.getTodasPoss():
+    for poss in todasPoss:
         screen.blit(possibilidades, ((220 + poss[0]*75), (50 + poss[1]*75))) 
      
     if(estado =="PASS"):
@@ -48,7 +48,7 @@ def display(estado):
     pygame.display.update() 
 
 
-display(game.estado)
+display(game.estado, game.getTodasPoss())
 
 while True:
     
@@ -62,15 +62,15 @@ while True:
                     i = floor((X-220)/75)
                     j = floor((Y-50)/75)
                     game.jogar(i, j)
-                print("PRETAS: "+str(game.placar["BLACK"]))
-                print("BRANCAS: "+str(game.placar["WHITE"]))
-                     	
-            display(game.estado)
-            jogadaAdv = Mediador.jogaAleatorio(game.getTodasPoss())
-            time.sleep(1)
-            game.jogar(jogadaAdv[0], jogadaAdv[1])
-            time.sleep(1)
-            display(game.estado) 
+                    print("PRETAS: "+str(game.placar["BLACK"]))
+                    print("BRANCAS: "+str(game.placar["WHITE"]))
+                            
+                display(game.estado)
+                jogadaAdv = Mediador.jogaAleatorio(game.getTodasPoss())
+                time.sleep(1)
+                game.jogar(jogadaAdv[0], jogadaAdv[1])
+                time.sleep(1)
+                display(game.estado, game.getTodasPoss()) 
 
 
 print("FIM DE JOGO")

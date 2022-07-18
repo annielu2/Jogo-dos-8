@@ -33,6 +33,8 @@ class ReversiGame:
                        "BLACK": 2,
                        "BLANK": 60} 
         
+        self.todasPoss = []
+        
         self.tabuleiro = []
         for i in range(8):
             if(i < 3 or i > 4):
@@ -47,6 +49,7 @@ class ReversiGame:
                           (3, 2), (3, 5),
                           (4, 2), (4, 5),
                           (5, 2), (5, 3), (5, 4), (5, 5)}
+        self.setTodasPoss();
     
     @staticmethod
     def negTipo(tipo):
@@ -62,12 +65,15 @@ class ReversiGame:
         self.placar[ReversiGame.negTipo(self.tipoJog)] -= 1 
 
     def getTodasPoss(self):
-        todasPoss = []
+        return self.todasPoss
+        
+    def setTodasPoss(self):
+        self.todasPoss.clear()
         for loc in self.alteradas:
             if(self.possJogar(loc[0], loc[1])):
-                todasPoss.append(loc)
+                self.todasPoss.append(loc)
                 
-        if(len(todasPoss) == 0):
+        if(len(self.todasPoss) == 0):
             if(self.estado == "NORMAL" and self.placar["BLANK"] > 0):
                 self.estado = "PASS"
                 self.tipoJog = ReversiGame.negTipo(self.tipoJog)
@@ -75,7 +81,6 @@ class ReversiGame:
                 self.estado = "FIN"
         else:
             self.estado = "NORMAL"
-        return todasPoss
 
 
     def possLinha(self, x, y, desX, desY):
@@ -141,6 +146,7 @@ class ReversiGame:
         
         self.placar[self.tipoJog] += 1
         self.tipoJog = ReversiGame.negTipo(self.tipoJog)
+        self.setTodasPoss()
         return True
         
 
