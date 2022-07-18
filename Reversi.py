@@ -2,6 +2,8 @@ import pygame
 from pygame.locals import *
 from math import floor
 import ReversiGame
+import time
+import Mediador
 
 pygame.init()
 
@@ -11,11 +13,12 @@ pos = pygame.image.load(r'Sprites/Posicao.png')
 peca_branca = pygame.image.load(r'Sprites/Peca_branca.png')
 peca_preta = pygame.image.load(r'Sprites/Peca_preta.png')
 possibilidades = pygame.image.load(r'Sprites/Possibilidade.png')
+font = pygame.font.Font('freesansbold.ttf', 16)
 
 
 game = ReversiGame.ReversiGame()
 
-def display():
+def display(estado):
     screen.fill((225,225,225))
     for i in range(8):
         for j in range(8):
@@ -31,14 +34,23 @@ def display():
     for poss in game.getTodasPoss():
         screen.blit(possibilidades, ((220 + poss[0]*75), (50 + poss[1]*75))) 
      
-    if(game.estado =="PASS"):
+    if(estado =="PASS"):
         print("Nenhuma jogada possível! Clicke para passar a jogada.")
     
+    elif(estado == "FIN"):
+    	placarPretas = "PRETAS: "+str(game.placar["BLACK"])
+    	txt = font.render(placarPretas, 1, (20, 20, 20))
+    	screen.blit(txt,(25, 50)) 
+    	placarBrancas = "BRANCAS: "+str(game.placar["WHITE"])
+    	txt = font.render(placarBrancas, 1, (20, 20, 20))
+    	screen.blit(txt,(25, 100)) 
+    	
     pygame.display.update() 
 
-display()
 
-while game.estado != "FIN":
+display(game.estado)
+
+while True:
     
     for event in pygame.event.get():
         if event.type == QUIT:  
@@ -52,10 +64,14 @@ while game.estado != "FIN":
                     game.jogar(i, j)
                 print("PRETAS: "+str(game.placar["BLACK"]))
                 print("BRANCAS: "+str(game.placar["WHITE"]))
-            display()
+                     	
+            display(game.estado)
+            jogadaAdv = Mediador.jogaAleatorio(game.getTodasPoss())
+            time.sleep(1)
+            game.jogar(jogadaAdv[0], jogadaAdv[1])
+            time.sleep(1)
+            display(game.estado) 
 
 
-display()
 print("FIM DE JOGO")
-while True:
-    i = 0
+
