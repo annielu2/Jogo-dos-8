@@ -26,4 +26,6 @@ import random
 #class Mediador:
     
 def jogaAleatorio(possibilidades):
+    if(len(possibilidades) == 0):
+        return (-1, -1)
     return random.choice(possibilidades)
