@@ -10,6 +10,8 @@ pygame.display.set_caption('Reversi')
 pos = pygame.image.load(r'Sprites/Posicao.png')
 peca_branca = pygame.image.load(r'Sprites/Peca_branca.png')
 peca_preta = pygame.image.load(r'Sprites/Peca_preta.png')
+possibilidades = pygame.Surface((40, 40))
+possibilidades.fill((255, 0, 0))
 estado = {}
 
 
@@ -46,6 +48,10 @@ while True:
                 screen.blit(peca_branca, posicao)
             elif game.tabuleiro[i][j] == 'BLACK':
                 screen.blit(peca_preta, posicao)
+     
+    for poss in game.getTodasPoss():
+        screen.blit(possibilidades, poss) 
+     
     pygame.display.update()    
 
 
