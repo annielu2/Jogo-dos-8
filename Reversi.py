@@ -63,11 +63,7 @@ while True:
                     i = floor((X-220)/75)
                     j = floor((Y-50)/75)
                     
-                    print("PRETAS: "+str(game.placar["BLACK"]))
-                    print("BRANCAS: "+str(game.placar["WHITE"]))
-                            
-                if(game.jogadaValida((i, j))):
-                    game.jogar(i, j)
+                if(game.jogar(i, j)):
                     display(game.estado)
                     jogadaAdv = Mediador.jogaAleatorio(game.getTodasPoss())
                     time.sleep(1)
