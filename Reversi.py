@@ -33,7 +33,7 @@ while True:
             if Y <= 650 and Y >=50 and X <= 820 and X >= 220:
                 i = floor((X-220)/75)
                 j = floor((Y-50)/75)
-                game.jogar(i, j, game.tipoJog)
+                game.jogar(i, j)
                 
     
     list_pos = estado.keys()

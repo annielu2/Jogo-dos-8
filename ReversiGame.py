@@ -50,16 +50,16 @@ class ReversiGame:
             return "WHITE"
 
 
-    def getTodasPoss(self, tipo):
+    def getTodasPoss(self):
         todasPoss = []
         for loc in self.alteradas:
-            if(self.possJogar(loc[0], loc[1], tipo)):
+            if(self.possJogar(loc[0], loc[1])):
                 todasPoss.append(loc)
         return todasPoss
 
 
-    def possLinha(self, x, y, desX, desY, tipo):
-        neg = ReversiGame.negTipo(tipo)
+    def possLinha(self, x, y, desX, desY):
+        neg = ReversiGame.negTipo(self.tipoJog)
         if(not((x >= 0 and y >= 0) and (x <= 7 and y <= 7)) or self.tabuleiro[x][y] != neg):
             return False
         
@@ -68,26 +68,26 @@ class ReversiGame:
             if(not((x >= 0 and y >= 0) and (x <= 7 and y <= 7))):
                 return False
         
-        if(self.tabuleiro[x][y] == tipo):
+        if(self.tabuleiro[x][y] == self.tipoJog):
             return True
         
         return False
     
     
-    def possJogar(self, x, y, tipo):
+    def possJogar(self, x, y):
         if(not self.tabuleiro[x][y] == "BLANK"):
             return False
         
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if(self.possLinha(x+i, y+j, i, j, tipo)):
+                if(self.possLinha(x+i, y+j, i, j)):
                     return True;
         return False
     
     
-    def transformarLinha(self, x, y, desX, desY, tipo):     
+    def transformarLinha(self, x, y, desX, desY):     
             
-        neg = ReversiGame.negTipo(tipo)
+        neg = ReversiGame.negTipo(self.tipoJog)
         if(not((x >= 0 and y >= 0) and (x <= 7 and y <= 7)) or self.tabuleiro[x][y] != neg):
             return False
         
@@ -96,26 +96,27 @@ class ReversiGame:
             if(not((x >= 0 and y >= 0) and (x <= 7 and y <= 7))):
                 return False
         
-        if(self.tabuleiro[x][y] == tipo):
+        if(self.tabuleiro[x][y] == self.tipoJog):
             x, y = x - desX, y - desY
             while(self.tabuleiro[x][y] == neg):
-                self.tabuleiro[x][y] = tipo
+                self.tabuleiro[x][y] = self.tipoJog
                 x, y = x - desX, y - desY
 
     
-    def jogar(self, x, y, tipo):
-        if(not self.possJogar(x, y, tipo)):
+    def jogar(self, x, y):
+        if(not self.possJogar(x, y)):
             print("Jogada Inválida! Tente novamente")
             return False
             
-        self.tabuleiro[x][y] = tipo
+        self.tabuleiro[x][y] = self.tipoJog
         self.alteradas.discard((x, y))
         
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if(self.tabuleiro[x+i][y+j] == "BLANK"):
-                    self.alteradas.add((x+i, y+j))
-                self.transformarLinha(x+i, y+j, i, j, tipo)
+                if((x+i >= 0 and y+j >= 0) and (x+i <= 7 and y+j <= 7)):
+                    if(self.tabuleiro[x+i][y+j] == "BLANK"):
+                        self.alteradas.add((x+i, y+j))
+                    self.transformarLinha(x+i, y+j, i, j)
         
         self.tipoJog = ReversiGame.negTipo(self.tipoJog)
         return True
@@ -124,7 +125,7 @@ class ReversiGame:
     def main(self):                        
         
         while(True):
-            poss = self.getTodasPoss(self.tipoJog)
+            poss = self.getTodasPoss()
             for i in range(8):
                 for j in range(8):
                     if(self.tabuleiro[i][j] == "WHITE"):
@@ -143,7 +144,7 @@ class ReversiGame:
             else:
                 x, y = map(int, input("[BRANCAS]Digite as coordenadas: ").split())
             
-            self.jogar(x, y, self.tipoJog)
+            self.jogar(x, y)
 
 
 #game = ReversiGame()
