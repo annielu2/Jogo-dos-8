@@ -22,6 +22,7 @@
 #  
 #  
 import random
+
 class ReversiGame:
     
     def __init__(self):
