@@ -105,7 +105,6 @@ class ReversiGame:
     
     def jogar(self, x, y):
         if(not self.possJogar(x, y)):
-            print("Jogada Inválida! Tente novamente")
             return False
             
         self.tabuleiro[x][y] = self.tipoJog
@@ -144,7 +143,8 @@ class ReversiGame:
             else:
                 x, y = map(int, input("[BRANCAS]Digite as coordenadas: ").split())
             
-            self.jogar(x, y)
+            if(not self.jogar(x, y)):
+                print("Jogada Inválida! Tente novamente")
 
 
 #game = ReversiGame()
