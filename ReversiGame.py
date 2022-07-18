@@ -116,6 +116,8 @@ class ReversiGame:
                 if(self.tabuleiro[x+i][y+j] == "BLANK"):
                     self.alteradas.add((x+i, y+j))
                 self.transformarLinha(x+i, y+j, i, j, tipo)
+        
+        self.tipoJog = ReversiGame.negTipo(self.tipoJog)
         return True
         
 
@@ -140,9 +142,8 @@ class ReversiGame:
                 x, y = map(int, input("[PRETAS]Digite as coordenadas: ").split())
             else:
                 x, y = map(int, input("[BRANCAS]Digite as coordenadas: ").split())
-                
-            if(self.jogar(x, y, self.tipoJog)):
-                self.tipoJog = ReversiGame.negTipo(self.tipoJog)
+            
+            self.jogar(x, y, self.tipoJog)
 
 
 game = ReversiGame()
