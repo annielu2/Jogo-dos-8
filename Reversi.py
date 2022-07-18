@@ -29,9 +29,11 @@ def display():
                 screen.blit(peca_preta, posicao)
      
     for poss in game.getTodasPoss():
-        
         screen.blit(possibilidades, ((220 + poss[0]*75), (50 + poss[1]*75))) 
      
+    if(game.estado =="PASS"):
+        print("Nenhuma jogada possível! Clicke para passar a jogada.")
+    
     pygame.display.update() 
 
 display()
@@ -50,11 +52,10 @@ while game.estado != "FIN":
                     game.jogar(i, j)
                 print("PRETAS: "+str(game.placar["BLACK"]))
                 print("BRANCAS: "+str(game.placar["WHITE"]))
-                if(game.estado =="PASS"):
-                    print("Nenhuma jogada possível! Clicke para passar a jogada.")
             display()
 
 
-display() 
+display()
+print("FIM DE JOGO")
 while True:
     i = 0

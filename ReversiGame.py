@@ -67,7 +67,7 @@ class ReversiGame:
                 todasPoss.append(loc)
                 
         if(len(todasPoss) == 0):
-            if(self.estado == "NORMAL"):
+            if(self.estado == "NORMAL" and self.placar["BLANK"] > 0):
                 self.estado = "PASS"
                 self.tipoJog = ReversiGame.negTipo(self.tipoJog)
             else:
@@ -129,6 +129,7 @@ class ReversiGame:
             
         self.tabuleiro[x][y] = self.tipoJog
         self.alteradas.discard((x, y))
+        self.placar["BLANK"] -= 1
         
         for i in range(-1, 2):
             for j in range(-1, 2):
