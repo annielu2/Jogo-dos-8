@@ -65,11 +65,15 @@ class ReversiGame:
         for loc in self.alteradas:
             if(self.possJogar(loc[0], loc[1])):
                 todasPoss.append(loc)
+                
         if(len(todasPoss) == 0):
             if(self.estado == "NORMAL"):
                 self.estado = "PASS"
+                self.tipoJog = ReversiGame.negTipo(self.tipoJog)
             else:
                 self.estado = "FIN"
+        else:
+            self.estado = "NORMAL"
         return todasPoss
 
 
