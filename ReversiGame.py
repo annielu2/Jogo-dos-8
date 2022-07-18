@@ -146,6 +146,6 @@ class ReversiGame:
             self.jogar(x, y, self.tipoJog)
 
 
-game = ReversiGame()
+#game = ReversiGame()
 
-game.main()
+#game.main()
