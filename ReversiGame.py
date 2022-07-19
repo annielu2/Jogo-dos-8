@@ -57,15 +57,6 @@ class ReversiGame:
             return "BLACK"
         else:
             return "WHITE"
-
-
-    def jogadaValida(self, pos):
-        todasPoss = self.getTodasPoss()
-        for poss in todasPoss:
-            if pos == poss:
-                return True
-        return False        
-    
     
     def transformaPeca(self, x, y):
         self.tabuleiro[x][y] = self.tipoJog

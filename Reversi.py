@@ -57,7 +57,7 @@ while True:
         if event.type == QUIT:  
             pygame.quit()
         elif event.type == MOUSEBUTTONDOWN:
-            if(game.estado =="NORMAL"):
+            if(game.estado !="FIN"):
                 X, Y = pygame.mouse.get_pos()
                 if Y <= 650 and Y >=50 and X <= 820 and X >= 220:
                     i = floor((X-220)/75)
@@ -66,9 +66,9 @@ while True:
                 if(game.jogar(i, j)):
                     display(game.estado)
                     jogadaAdv = Mediador.jogaAleatorio(game.getTodasPoss())
-                    time.sleep(1)
+                    time.sleep(.5)
                     game.jogar(jogadaAdv[0], jogadaAdv[1])
-                    time.sleep(1)
+                    time.sleep(.5)
                     display(game.estado, game.getTodasPoss()) 
 
 
