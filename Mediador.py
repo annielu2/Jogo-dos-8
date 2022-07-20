@@ -24,15 +24,18 @@
 import random
 import ReversiGame
 
-tipoIA = "BLACK"
+tipoIA = "WHITE"
 
 def jogaAleatorio(possibilidades):
     if(len(possibilidades) == 0):
         return (-1, -1)
     return random.choice(possibilidades)
 
+def joga(jogada, game):
+    game.jogar(jogada[0], jogada[1])
+
 def avaliaJogo(game):
-    return game.placar[tipoIA] - game.placar[ReversiGame.negTipo(tipoIA)]
+    return game.placar[tipoIA] - game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)]
     
 
 def getPoss(game):

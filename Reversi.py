@@ -4,6 +4,7 @@ from math import floor
 import ReversiGame
 import time
 import Mediador
+import MiniMax
 
 pygame.init()
 
@@ -65,13 +66,10 @@ while True:
                     
                 if(game.jogar(i, j)):
                     display(game.estado)
-                    jogadaAdv = Mediador.jogaAleatorio(game.getTodasPoss())
-                    time.sleep(.5)
+                    jogadaAdv = MiniMax.escolheJogada(game)
                     game.jogar(jogadaAdv[0], jogadaAdv[1])
-                    time.sleep(.5)
                     display(game.estado, game.getTodasPoss())
                 
-                game = Mediador.cloneGame(game)
 
 
 print("FIM DE JOGO")
