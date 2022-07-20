@@ -69,7 +69,9 @@ while True:
                     time.sleep(.5)
                     game.jogar(jogadaAdv[0], jogadaAdv[1])
                     time.sleep(.5)
-                    display(game.estado, game.getTodasPoss()) 
+                    display(game.estado, game.getTodasPoss())
+                
+                game = Mediador.cloneGame(game)
 
 
 print("FIM DE JOGO")

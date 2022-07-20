@@ -22,10 +22,39 @@
 #  
 #  
 import random
+import ReversiGame
 
-#class Mediador:
-    
+tipoIA = "BLACK"
+
 def jogaAleatorio(possibilidades):
     if(len(possibilidades) == 0):
         return (-1, -1)
     return random.choice(possibilidades)
+
+def avaliaJogo(game):
+    return game.placar[tipoIA] - game.placar[ReversiGame.negTipo(tipoIA)]
+    
+
+def getPoss(game):
+    return game.getTodasPoss();
+    
+    
+def cloneGame(game):
+    clone = ReversiGame.ReversiGame()
+    clone.tipoJog = game.tipoJog
+    clone.estado = game.estado
+    
+    clone.placar["BLACK"] = game.placar["BLACK"]
+    clone.placar["WHITE"] = game.placar["WHITE"]
+    clone.placar["BLANK"] = game.placar["BLANK"]
+    
+    for i in range(8):
+        for j in range(8):
+            clone.tabuleiro[i][j] = game.tabuleiro[i][j]
+    
+    clone.alteradas.clear()
+    for alt in game.alteradas:
+        clone.alteradas.add(alt)
+    
+    return clone
+            
