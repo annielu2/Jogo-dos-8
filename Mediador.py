@@ -35,7 +35,13 @@ def joga(jogada, game):
     game.jogar(jogada[0], jogada[1])
 
 def avaliaJogo(game):
-    return game.placar[tipoIA] - game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)]
+    if(game.estado == "FIN"):
+        return 100*(game.placar[tipoIA] - game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)])
+    
+    if(game.tipoJog == tipoIA):
+        return len(game.getTodasPoss())*game.placar[tipoIA] - game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)]
+    else:
+        return game.placar[tipoIA] - len(game.getTodasPoss())*game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)]
     
 
 def getPoss(game):

@@ -26,10 +26,13 @@ import Mediador
 
 maxRec = 3
 
+infit = 1000000
+
+
 def escolheJogada(game):
     possibilidades = Mediador.getPoss(game)
     
-    possMax = -64
+    possMax = -infit
     movimento = (4, 4)
     
     for poss in possibilidades:
@@ -43,11 +46,11 @@ def escolheJogada(game):
 
 
 def miniMax(tipo, rec, poss, game):
+    Mediador.joga(poss, game)
     if(rec >= maxRec):
         return Mediador.avaliaJogo(game)
     
     
-    Mediador.joga(poss, game)
     possibilidades = Mediador.getPoss(game)
     
     if(len(possibilidades) == 0):
@@ -57,7 +60,7 @@ def miniMax(tipo, rec, poss, game):
             return miniMax("MAX", rec+1, poss, Mediador.cloneGame(game))
     
     if(tipo == "MAX"):
-        possMax = -64
+        possMax = -infit
         for poss in possibilidades:
             auxMax = miniMax("MINI", rec+1, poss, Mediador.cloneGame(game))
             if(auxMax > possMax):
@@ -67,7 +70,7 @@ def miniMax(tipo, rec, poss, game):
     
     
     elif(tipo == "MINI"):
-        possMini = 64
+        possMini = infit
         for poss in possibilidades:
             auxMini = miniMax("MAX", rec+1, poss, Mediador.cloneGame(game))
             if(auxMini < possMini):
