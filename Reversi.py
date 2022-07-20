@@ -68,6 +68,7 @@ while True:
                     display(game.estado)
                     jogadaAdv = MiniMax.escolheJogada(game)
                     game.jogar(jogadaAdv[0], jogadaAdv[1])
+                    time.sleep(0.5)
                     display(game.estado, game.getTodasPoss())
                 
 
