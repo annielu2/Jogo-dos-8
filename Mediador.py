@@ -24,6 +24,15 @@
 import random
 import ReversiGame
 
+pesos = [
+        [120, -20, 20, 5],
+        [-20, -40, -5, -5],
+        [20, -5, 15, 3],
+        [5, -5, 3, 3]
+        ]
+
+pesoPoss = 3
+
 tipoIA = "WHITE"
 
 def jogaAleatorio(possibilidades):
@@ -36,12 +45,21 @@ def joga(jogada, game):
 
 def avaliaJogo(game):
     if(game.estado == "FIN"):
-        return 100*(game.placar[tipoIA] - game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)])
+        return 10*(game.placar[tipoIA] - game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)])
+    
+    aval = 0
+    
+    for i in range(8):
+        for j in range(8):
+            if(game.tabuleiro[i][j] == tipoIA):
+                aval += pesos[i][j]
+            elif(game.tabuleiro[i][j] == ReversiGame.ReversiGame.negTipo(tipoIA)):
+                aval -= pesos[i][j]
     
     if(game.tipoJog == tipoIA):
-        return len(game.getTodasPoss())*game.placar[tipoIA] - game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)]
+        return aval + pesoPoss * len(game.getTodasPoss())
     else:
-        return game.placar[tipoIA] - len(game.getTodasPoss())*game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)]
+        return aval - pesoPoss * len(game.getTodasPoss())
     
 
 def getPoss(game):
@@ -66,4 +84,11 @@ def cloneGame(game):
         clone.alteradas.add(alt)
     
     return clone
-            
+      
+      
+for i in range(4):
+    pesos[i] = pesos[i] + list(reversed(pesos[i]))
+
+for i in range(3, -1, -1):
+    pesos.append(pesos[i])
+
