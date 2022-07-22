@@ -24,7 +24,7 @@
 import Mediador 
 
 
-maxRec = 2
+maxRec = 3
 
 infit = 1000000
 

@@ -31,7 +31,7 @@ pesos = [
         [5, -5, 3, 3]
         ]
 
-pesoPoss = 3
+pesoPoss = 1
 
 tipoIA = "WHITE"
 
@@ -43,11 +43,9 @@ def jogaAleatorio(possibilidades):
 def joga(jogada, game):
     game.jogar(jogada[0], jogada[1])
 
-def avaliaJogo(game):
-    if(game.estado == "FIN"):
-        return 10*(game.placar[tipoIA] - game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)])
-    
+def avaliaJogo(game):    
     aval = 0
+    avalPoss = 0
     
     for i in range(8):
         for j in range(8):
@@ -56,10 +54,15 @@ def avaliaJogo(game):
             elif(game.tabuleiro[i][j] == ReversiGame.ReversiGame.negTipo(tipoIA)):
                 aval -= pesos[i][j]
     
+    
+    for poss in game.getTodasPoss():
+    	avalPoss += pesos[poss[0]][poss[1]]
+    
+    
     if(game.tipoJog == tipoIA):
-        return aval + pesoPoss * len(game.getTodasPoss())
+        return aval + pesoPoss * avalPoss
     else:
-        return aval - pesoPoss * len(game.getTodasPoss())
+        return aval - pesoPoss * avalPoss
     
 
 def getPoss(game):
