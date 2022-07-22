@@ -31,7 +31,7 @@ pesos = [
         [5, -5, 3, 3]
         ]
 
-pesoPoss = 1
+pesoPoss = 0.8
 
 tipoIA = "WHITE"
 
