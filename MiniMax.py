@@ -33,8 +33,8 @@ def escolheJogada(game):
     possibilidades = Mediador.getPoss(game)
     
     possMax = -infit
-    alpha = infit
-    beta = -infit
+    alpha = -infit
+    beta = infit
     movimento = (4, 4)
     
     for poss in possibilidades:
