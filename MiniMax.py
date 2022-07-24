@@ -3,7 +3,7 @@
 #
 #  MiniMax.py
 #  
-#  Copyright 2022 João Paulo Paiva Lima <joao.lima1@estudante.ufla.br>
+#  Copyright 2022 João Paulo Paiva Lima <joao.lima1@estudante.ufla.br> e Ana Luiza Faria Calixto <ana.calixto@estudante.ufla.br>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,45 +24,52 @@
 import Mediador 
 
 
-maxRec = 4
+infit = 1000000 #Placeholder para inito
+maxRec = 4      #Número máximo de recursão.
 
-infit = 1000000
 
-
+#Função que escolhe a jogada. Resultado do MiniMax.
 def escolheJogada(game):
     possibilidades = Mediador.getPoss(game)
     
     possMax = -infit
     alpha = -infit
     beta = infit
+    
+    #Movimento 'básico' quando for  necessário passar a vez.
     movimento = (4, 4)
     
+    #O melhor 'galho' da árvore é o escolhido.
     for poss in possibilidades:
         auxMax = miniMax("MINI", 1, poss, Mediador.cloneGame(game), alpha, beta)
         if(auxMax > possMax):
             possMax = auxMax
             movimento = poss
     
-    print(Mediador.avaliaJogo(game))
-    
     return movimento
 
 
-
+#Função MiniMax para escolher a melhor jogada.
 def miniMax(tipo, rec, poss, game, alpha, beta):
+    
+    #Faz a jogada.
     Mediador.joga(poss, game)
+    
+    #Se for a última recursão, avalia o estado.
     if(rec >= maxRec):
         return Mediador.avaliaJogo(game)
     
-    
+    #Considera as próximas possibilidades.
     possibilidades = Mediador.getPoss(game)
     
+    #Se for necessário passa a vez, passa de nível diretamente
     if(len(possibilidades) == 0):
         if(tipo == "MAX"):
             return miniMax("MINI", rec+1, poss, Mediador.cloneGame(game), alpha, beta)
         else:
             return miniMax("MAX", rec+1, poss, Mediador.cloneGame(game), alpha, beta)
     
+    #Executa a recursão de maximação.
     if(tipo == "MAX"):
         possMax = -infit
         for poss in possibilidades:
@@ -74,6 +81,7 @@ def miniMax(tipo, rec, poss, game, alpha, beta):
         return possMax
     
     
+    #Executa a recursão de minimazação
     elif(tipo == "MINI"):
         possMini = infit
         for poss in possibilidades:
