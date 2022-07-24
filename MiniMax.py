@@ -24,7 +24,7 @@
 import Mediador 
 
 
-maxRec = 3
+maxRec = 5
 
 infit = 1000000
 
@@ -33,10 +33,12 @@ def escolheJogada(game):
     possibilidades = Mediador.getPoss(game)
     
     possMax = -infit
+    alpha = infit
+    beta = -infit
     movimento = (4, 4)
     
     for poss in possibilidades:
-        auxMax = miniMax("MINI", 1, poss, Mediador.cloneGame(game))
+        auxMax = miniMax("MINI", 1, poss, Mediador.cloneGame(game), alpha, beta)
         if(auxMax > possMax):
             possMax = auxMax
             movimento = poss
@@ -45,7 +47,7 @@ def escolheJogada(game):
 
 
 
-def miniMax(tipo, rec, poss, game):
+def miniMax(tipo, rec, poss, game, alpha, beta):
     Mediador.joga(poss, game)
     if(rec >= maxRec):
         return Mediador.avaliaJogo(game)
@@ -55,14 +57,15 @@ def miniMax(tipo, rec, poss, game):
     
     if(len(possibilidades) == 0):
         if(tipo == "MAX"):
-            return miniMax("MINI", rec+1, poss, Mediador.cloneGame(game))
+            return miniMax("MINI", rec+1, poss, Mediador.cloneGame(game), alpha, beta)
         else:
-            return miniMax("MAX", rec+1, poss, Mediador.cloneGame(game))
+            return miniMax("MAX", rec+1, poss, Mediador.cloneGame(game), alpha, beta)
     
     if(tipo == "MAX"):
         possMax = -infit
         for poss in possibilidades:
-            auxMax = miniMax("MINI", rec+1, poss, Mediador.cloneGame(game))
+            auxMax = miniMax("MINI", rec+1, poss, Mediador.cloneGame(game), alpha, beta)
+            alpha = max(alpha, auxMax)
             if(auxMax > possMax):
                 possMax = auxMax
                 
@@ -72,7 +75,10 @@ def miniMax(tipo, rec, poss, game):
     elif(tipo == "MINI"):
         possMini = infit
         for poss in possibilidades:
-            auxMini = miniMax("MAX", rec+1, poss, Mediador.cloneGame(game))
+            auxMini = miniMax("MAX", rec+1, poss, Mediador.cloneGame(game), alpha, beta)
+            beta = min(beta, auxMini)
+            if(beta <= alpha):
+                break
             if(auxMini < possMini):
                 possMini = auxMini
     
