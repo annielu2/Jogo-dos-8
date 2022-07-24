@@ -17,6 +17,8 @@ possibilidades = pygame.image.load(r'Sprites/Possibilidade.png')
 font = pygame.font.Font('freesansbold.ttf', 16)
 
 
+
+    
 game = ReversiGame.ReversiGame()
 
 def display(estado, todasPoss = []):
@@ -51,27 +53,37 @@ def display(estado, todasPoss = []):
     pygame.display.update() 
 
 
-display(game.estado, game.getTodasPoss())
-
-while True:
-    for event in pygame.event.get():
-        if event.type == QUIT:  
-            pygame.quit()
-        elif event.type == MOUSEBUTTONDOWN:
-            if(game.estado !="FIN"):
-                X, Y = pygame.mouse.get_pos()
-                if Y <= 650 and Y >=50 and X <= 820 and X >= 220:
-                    i = floor((X-220)/75)
-                    j = floor((Y-50)/75)
+def reversiInterface():
+    display(game.estado, game.getTodasPoss())
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:  
+                pygame.quit()
+            elif event.type == MOUSEBUTTONDOWN:
+                if(game.estado !="FIN"):
+                    X, Y = pygame.mouse.get_pos()
+                    if Y <= 650 and Y >=50 and X <= 820 and X >= 220:
+                        i = floor((X-220)/75)
+                        j = floor((Y-50)/75)
+                        
+                    if(game.jogar(i, j)):
+                        display(game.estado)
+                        jogadaAdv = MiniMax.escolheJogada(game)
+                        game.jogar(jogadaAdv[0], jogadaAdv[1])
+                        time.sleep(0.5)
+                        display(game.estado, game.getTodasPoss())
                     
-                if(game.jogar(i, j)):
-                    display(game.estado)
-                    jogadaAdv = MiniMax.escolheJogada(game)
-                    game.jogar(jogadaAdv[0], jogadaAdv[1])
-                    time.sleep(0.5)
-                    display(game.estado, game.getTodasPoss())
-                
 
+def tela_inicial():
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+            elif event.type == MOUSEBUTTONDOWN:
+                reversiInterface()
+        screen.fill((0, 0, 0))
+        pygame.display.update()
 
+tela_inicial()
 print("FIM DE JOGO")
 
