@@ -31,7 +31,7 @@ pesos = [
         [5, -5, 3, 3]
         ]
 
-pesoPoss = 0.8
+pesoPoss = 0.5
 
 tipoIA = "WHITE"
 
@@ -45,7 +45,8 @@ def joga(jogada, game):
 
 def avaliaJogo(game):    
     aval = 0
-    avalPoss = 0
+    avalPoss = -400
+    
     
     for i in range(8):
         for j in range(8):
@@ -54,9 +55,11 @@ def avaliaJogo(game):
             elif(game.tabuleiro[i][j] == ReversiGame.ReversiGame.negTipo(tipoIA)):
                 aval -= pesos[i][j]
     
+    if(game.estado == "FIN"):
+        return 150*(game.placar[tipoIA] - game.placar[ReversiGame.ReversiGame.negTipo(tipoIA)])
     
     for poss in game.getTodasPoss():
-    	avalPoss += pesos[poss[0]][poss[1]]
+    	avalPoss = max(avalPoss, pesos[poss[0]][poss[1]])
     
     
     if(game.tipoJog == tipoIA):
