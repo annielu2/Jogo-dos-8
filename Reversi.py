@@ -8,13 +8,16 @@ import MiniMax
 
 pygame.init()
 
-screen =  pygame.display.set_mode((1000, 1000))
+screen =  pygame.display.set_mode((1000, 750))
 pygame.display.set_caption('Reversi')
 pos = pygame.image.load(r'Sprites/Posicao.png')
 peca_branca = pygame.image.load(r'Sprites/Peca_branca.png')
 peca_preta = pygame.image.load(r'Sprites/Peca_preta.png')
 possibilidades = pygame.image.load(r'Sprites/Possibilidade.png')
 font = pygame.font.Font('freesansbold.ttf', 16)
+botao_jogar = pygame.image.load(r'Sprites/Botao.png')
+botao_jogar_click = pygame.image.load(r'Sprites/Botao2.png')
+reversi_escrita = pygame.image.load(r'Sprites/REVERSI.png')
 
 
 
@@ -80,8 +83,17 @@ def tela_inicial():
             if event.type == QUIT:
                 pygame.quit()
             elif event.type == MOUSEBUTTONDOWN:
-                reversiInterface()
-        screen.fill((0, 0, 0))
+                X, Y = pygame.mouse.get_pos()
+                if (X >= 375 and X <= 625 and Y >= 332 and Y <= 419):
+                    screen.fill((225, 225, 225))
+                    screen.blit(reversi_escrita, (280, 175))
+                    screen.blit(botao_jogar_click, (375, 332))
+                    pygame.display.update()
+                    time.sleep(0.2)
+                    reversiInterface()
+        screen.fill((225, 225, 225))
+        screen.blit(reversi_escrita, (280, 175))
+        screen.blit(botao_jogar, (375, 332))
         pygame.display.update()
 
 tela_inicial()
