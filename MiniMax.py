@@ -25,11 +25,11 @@ import Mediador
 
 
 infit = 1000000 #Placeholder para inito
-maxRec = 4      #Número máximo de recursão.
+#maxRec = 4      #Número máximo de recursão.
 
 
 #Função que escolhe a jogada. Resultado do MiniMax.
-def escolheJogada(game):
+def escolheJogada(game, maxRec):
     possibilidades = Mediador.getPoss(game)
     
     possMax = -infit
@@ -41,7 +41,7 @@ def escolheJogada(game):
     
     #O melhor 'galho' da árvore é o escolhido.
     for poss in possibilidades:
-        auxMax = miniMax("MINI", 1, poss, Mediador.cloneGame(game), alpha, beta)
+        auxMax = miniMax("MINI", 1, poss, Mediador.cloneGame(game), alpha, beta, maxRec)
         if(auxMax > possMax):
             possMax = auxMax
             movimento = poss
@@ -50,7 +50,7 @@ def escolheJogada(game):
 
 
 #Função MiniMax para escolher a melhor jogada.
-def miniMax(tipo, rec, poss, game, alpha, beta):
+def miniMax(tipo, rec, poss, game, alpha, beta, maxRec):
     
     #Faz a jogada.
     Mediador.joga(poss, game)
@@ -65,15 +65,15 @@ def miniMax(tipo, rec, poss, game, alpha, beta):
     #Se for necessário passa a vez, passa de nível diretamente
     if(len(possibilidades) == 0):
         if(tipo == "MAX"):
-            return miniMax("MINI", rec+1, poss, Mediador.cloneGame(game), alpha, beta)
+            return miniMax("MINI", rec+1, poss, Mediador.cloneGame(game), alpha, beta, maxRec)
         else:
-            return miniMax("MAX", rec+1, poss, Mediador.cloneGame(game), alpha, beta)
+            return miniMax("MAX", rec+1, poss, Mediador.cloneGame(game), alpha, beta, maxRec)
     
     #Executa a recursão de maximação.
     if(tipo == "MAX"):
         possMax = -infit
         for poss in possibilidades:
-            auxMax = miniMax("MINI", rec+1, poss, Mediador.cloneGame(game), alpha, beta)
+            auxMax = miniMax("MINI", rec+1, poss, Mediador.cloneGame(game), alpha, beta, maxRec)
             possMax = max(possMax, auxMax)
             
             alpha = max(alpha, auxMax)
@@ -85,7 +85,7 @@ def miniMax(tipo, rec, poss, game, alpha, beta):
     elif(tipo == "MINI"):
         possMini = infit
         for poss in possibilidades:
-            auxMini = miniMax("MAX", rec+1, poss, Mediador.cloneGame(game), alpha, beta)
+            auxMini = miniMax("MAX", rec+1, poss, Mediador.cloneGame(game), alpha, beta, maxRec)
             possMini = min(possMini, auxMini)
             
             beta = min(beta, auxMini)
