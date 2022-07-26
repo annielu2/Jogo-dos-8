@@ -13,7 +13,6 @@ Este projeto foi criado como um trabalho da disciplina de Inteligência Artifici
 * Na pasta fonts está armazenada a fonte utilizada na escrita: BD_Cartoon_Shout
 
 ## Explicando os arquivos .py
-<br>
 
 ### Reversi.py
 
@@ -81,7 +80,17 @@ Responsável por exibir o tabuleiro, as peças e as possibilidades da jogada a c
 
 É responsável por carregar a imagem de BG, e também exibir o placar das peças a cada jogada realizada.
 
-<br><br>
+<br>
+
+### ReversiGame.py
+
+#### 1- main()
+
+Este método é utilizado apenas para testes das funcionalidades e regras do jogo no terminal.
+
+#### 2- jogar(self, x, y)
+
+Este método é responsável pelo gerenciamento das jogadas, avaliando tanto a posição, quanto realizando a troca de jogadores. Também é responsável pelo cálculo de possibilidades e retorna um valor booleano que indica se a jogada é válida ou não.
 
 
 
