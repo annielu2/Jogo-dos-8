@@ -86,8 +86,12 @@ def avaliaJogo(game):
     
 
 #retorna as possibilidades de determinado jogo.
+#Retorna um 'movimento básico' caso seja necessário passar a vez
 def getPoss(game):
-    return game.getTodasPoss();
+    if(len(game.getTodasPoss()) == 0):
+        return [(4,4)]
+    else:
+        return game.getTodasPoss();
     
 
 #Clona o jogo e retorna. Usado para iterar na árvore.

@@ -24,8 +24,10 @@
 import Mediador 
 
 
+
 infit = 1000000 #Placeholder para inito
 #maxRec = 4      #Número máximo de recursão.
+
 
 
 #Função que escolhe a jogada. Resultado do MiniMax.
@@ -35,9 +37,6 @@ def escolheJogada(game, maxRec):
     possMax = -infit
     alpha = -infit
     beta = infit
-    
-    #Movimento 'básico' quando for  necessário passar a vez.
-    movimento = (4, 4)
     
     #O melhor 'galho' da árvore é o escolhido.
     for poss in possibilidades:
@@ -77,6 +76,8 @@ def miniMax(tipo, rec, poss, game, alpha, beta, maxRec):
             possMax = max(possMax, auxMax)
             
             alpha = max(alpha, auxMax)
+            if(beta <= alpha):
+                break
                 
         return possMax
     
@@ -94,3 +95,4 @@ def miniMax(tipo, rec, poss, game, alpha, beta, maxRec):
     
         return possMini
         
+
