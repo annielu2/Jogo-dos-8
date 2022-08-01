@@ -90,9 +90,26 @@ Este método é utilizado apenas para testes das funcionalidades e regras do jog
 
 #### 2- jogar(self, x, y)
 
-Este método é responsável pelo gerenciamento das jogadas, avaliando tanto a posição, quanto realizando a troca de jogadores. Também é responsável pelo cálculo de possibilidades e retorna um valor booleano que indica se a jogada é válida ou não.
+Este método é responsável pelo gerenciamento das jogadas, avaliando tanto a posição, quanto realizando a troca de jogadores. Também é responsável pelo cálculo de possibilidades e retorna um valor booleano que indica se a jogada é válida ou não. 
+As peças capturadas pelo jogador serão transformadas:
+```
+  for i in range(-1, 2):
+      for j in range(-1, 2):
+          if((x+i >= 0 and y+j >= 0) and (x+i <= 7 and y+j <= 7)):
+              if(self.tabuleiro[x+i][y+j] == "BLANK"):
+                  self.alteradas.add((x+i, y+j))
+              self.transformarLinha(x+i, y+j, i, j)
+```
 
+#### 3- transformarLinha(self, x, y, desX, desY)
 
+Este método será responsável por realizar a transformação das peças do adversário nas peças do jogador. O algoritmo caminha nas peças do adversário até encontrar uma peça que seja sua. A partir deste ponto, volta para o início transformando as peças adversárias.
+
+#### 4- possJogar(self, x, y)
+
+Este método é responsável por checar se o espaço em branco pode ser jogado, testando as oito linhas que podem definir uma possibilidade.
+
+#### 5- possLinha(self, x, y, desX, desY)
 
 
 
