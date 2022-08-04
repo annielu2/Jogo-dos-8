@@ -170,9 +170,69 @@ Este método é o construtor da classe ReversiGame. Responsável por realizar a 
         self.tabuleiro.append(["BLANK"]*3 + ["BLACK", "WHITE"] + ["BLANK"]*3)
 ```
 São definidos os espaços das potenciais jogadas e descobre as possibilidades do primeiro a jogar.
-<br>
+
+<br><br>
 
 ### MiniMax.py
 
+Neste arquivo é implementado o algoritmo do MiniMax, que é utilizado pela IA para escolher as suas melhores jogadas, de acordo com previsões de situações futuras em que o jogador possa vencer ou levar vantagens. Isso é calculdado de forma que a cada passo, assume-se que o jogador maximizador está tentando maximizar as suas chances de ganhar, enquanto na próxima rodada o jogador minimizador está tentando minimizar as chances de isso acontecer (maximizando as chances de que ele próprio ganhe). O maximizador precisa escolher uma jogada que tem a maior dentre as menores pontuações que o minimizador pode fazer aquele ter. <br><br>
+Foi utilizada a poda alfa e beta com o objetivo de otimizar o algoritmo, uma vez que quanto mais recursões (altura da árvore de possibilidades), mais lento ele fica. <br><br>
+Para conhecer mais sobre o MiniMax:
+ * https://en.wikipedia.org/wiki/Minimax
+ * https://www.youtube.com/watch?v=KU9Ch59-4vw
+ * https://www.youtube.com/watch?v=l-hh51ncgDI
+ * https://towardsdatascience.com/how-a-chess-playing-computer-thinks-about-its-next-move-8f028bd0e7b1
+
+#### 1- miniMax(tipo, rec, poss, game, alpha, beta, maxRec)
+
+Este método é responsável pela implementação do MiniMax para escolher a melhor jogada. Nele, é passado um valor que definirá quantas recursões serão realizadas, e esse valor irá definir a dificuldade do jogo (o quanto a IA será inteligente).
+
+```
+if(rec >= maxRec):
+    return Mediador.avaliaJogo(game)
+```
+Neste trecho, é avaliado o estado do jogo caso seja a última recursão. 
+
+```
+possibilidades = Mediador.getPoss(game)
+if(len(possibilidades) == 0):
+    if(tipo == "MAX"):
+        return miniMax("MINI", rec+1, poss, Mediador.cloneGame(game), alpha, beta, maxRec)
+    else:
+        return miniMax("MAX", rec+1, poss, Mediador.cloneGame(game), alpha, beta, maxRec)
+```
+São verificadas as possibilidades de jogada da IA, e caso não haja nenhuma, passa a vez e a função é chamada novamente, passando de nível diretamente.
+
+```
+ if(tipo == "MAX"):
+    possMax = -infit
+    for poss in possibilidades:
+        auxMax = miniMax("MINI", rec+1, poss, Mediador.cloneGame(game), alpha, beta, maxRec)
+        possMax = max(possMax, auxMax)
+            
+        alpha = max(alpha, auxMax)
+        if(beta <= alpha):
+           break
+                
+   return possMax
+ 
+elif(tipo == "MINI"):
+   possMini = infit
+   for poss in possibilidades:
+       auxMini = miniMax("MAX", rec+1, poss, Mediador.cloneGame(game), alpha, beta, maxRec)
+       possMini = min(possMini, auxMini)
+            
+       beta = min(beta, auxMini)
+       if(beta <= alpha):
+           break
+    
+    return possMini
+```
+Neste trecho é realizada a recursão de maximização ou minimização. Caso a arvore está em "MAX" é feita a recursão de maximização, caso o contrário, é realizada a de minimização. Observa-se a utilização da poda alfa e beta, na qual alfa recebe o maior valor da maximização, e beta o menor valor da minimização.
+
+
+#### 2- escolheJogada(game, maxRec)
+
+Este método é responsável por escolher a jogada de acordo com o resultado do MiniMax.
 
 
