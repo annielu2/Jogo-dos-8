@@ -111,6 +111,68 @@ Este método é responsável por checar se o espaço em branco pode ser jogado, 
 
 #### 5- possLinha(self, x, y, desX, desY)
 
+Este método checa se a linha de algum dos oito vizinhos da peça define uma possibilidade.Uma peça do jogador após N do adversário, sem nenhum epaço em branco entre elas.
+
+#### 6- setTodasPoss(self)
+
+Este método é responsável por descobrir todas as possibilidades de jogada que o jogador atual possui na rodada. Caso não haja nenhuma possibilidade, muda-se o estado do jogo.
+
+```
+if(len(self.todasPoss) == 0):
+    if(self.estado == "NORMAL" and self.placar["BLANK"] > 0):
+        self.estado = "PASS"
+    else:
+        self.estado = "FIN"
+```
+O atributo estado pode receber o valor "PASS" que passa a vez para o próximo jogador, ou poderá receber o valor "FIN" que finalizará o jogo.
+
+#### 7- getTodasPoss(self)
+
+Este método tem como objetivo, retornar uma lista de tuplas em que cada uma contém os valores x e y das coordenadas das possibilidades.
+
+#### 8- transformaPeca(self, x, y)
+
+Este método é responsável por mudar a cor de uma peça ou colocá-la em um espaço em branco.
+```
+self.placar[self.tipoJog] += 1
+    if(self.tabuleiro[x][y] == "BLANK"):
+        self.placar["BLANK"] -= 1         
+```
+Ao colocar uma nova peça no tabuleiro, o placar do jogador é incrementado e caso a posição seja vazia, a quantidade de posiçes vazias é decrementada.
+
+```
+else:
+    self.placar[ReversiGame.negTipo(self.tipoJog)] -= 1 
+```
+
+Caso não seja vazia, a cor é mudada e o placar do adversário é decrementado.
+
+```
+self.tabuleiro[x][y] = self.tipoJog
+ ```
+Por fim, a posição espacificada do tabuleiro recebe o valor do tipo da peça do jogador.
+
+#### 9- negTipo(tipo)
+
+Este é um método auxiliar que retorna a cor oposta da peça. Utilizado para facilitar a leitura do código.
+
+#### 10- __init__(self)
+
+Este método é o construtor da classe ReversiGame. Responsável por realizar a inicialização dos atributos, como por exemplo o estado, o tipo do jogador, o placar inicial (que começa com duas peças de cada tipo) e a criação da lista de possibilidades. Também é criado o tabuleiro do jogo:
+
+```
+ for i in range(8):
+    if(i < 3 or i > 4):
+        self.tabuleiro.append(["BLANK"]*8)
+     elif(i == 3):
+        self.tabuleiro.append(["BLANK"]*3 + ["WHITE", "BLACK"] + ["BLANK"]*3)
+     else:
+        self.tabuleiro.append(["BLANK"]*3 + ["BLACK", "WHITE"] + ["BLANK"]*3)
+```
+São definidos os espaços das potenciais jogadas e descobre as possibilidades do primeiro a jogar.
+<br>
+
+### MiniMax.py
 
 
 
