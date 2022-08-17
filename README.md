@@ -234,5 +234,36 @@ Neste trecho é realizada a recursão de maximização ou minimização. Caso a 
 #### 2- escolheJogada(game, maxRec)
 
 Este método é responsável por escolher a jogada de acordo com o resultado do MiniMax.
+Para cada possibilidade é executado o algoritmo do MiniMax e assim, é retornada a melhor jogada encontrada.
+
+### Mediador.py
+
+Este arquivo tem como principal objetivo adaptar a IA para o jogo Reversi. Isso possibilita e facilita um possível reaproveitamento do código para outros jogos e projetos.<br>
+
+Primeiro, definimos os pesos de cada posição de um quadrante do tabuleiro, que posteriormente será replicado.
+
+```
+pesos = [
+        [120, -20, 20, 5],
+        [-20, -40, -5, -5],
+        [20, -5, 15, 3],
+        [5, -5, 3, 3]
+        ]
+```
+Também definimos o tipo de peça que será utilizado pela IA
+
+#### 1- jogaAleatorio(possibilidades)
+
+Este método realiza uma jogada aleatória, foi utilizada para debug.
+
+#### 2- joga(jogada, game)
+
+Este método realiza a jogada de acordo com a posição dada chamando o método jogar do objeto ReversiGame
+
+#### 3- avaliaJogo(game)
+
+Este método realia a avaliação da configuração atual do jogo. Realiza a soma dos pesos de cada uma das peças, sendo positivas para a IA e negativas para o jogador.
+
+
 
 
